@@ -22,7 +22,6 @@ const DataTable = (props) => {
 
   return (
     <div>
-      <h2>Table</h2>
       <Table responsive>
         <thead>
           <tr>
@@ -34,7 +33,14 @@ const DataTable = (props) => {
         <tbody>
           {tableData.map((row, key) => {
             return (
-              <tr key={key} id={row.agent}>
+              <tr
+                key={key}
+                id={row.agent}
+                onClick={(e) => {
+                  console.log(e.currentTarget.id);
+                  props.setAgent(e.currentTarget.id);
+                }}
+              >
                 <td>{row.agent}</td>
                 <td>{row.propertyType}</td>
                 <td>{row.date}</td>
