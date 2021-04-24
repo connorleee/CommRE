@@ -1,18 +1,16 @@
+import React from "react";
 import Header from "./components/Header";
-import Table from "./components/Table";
-import Chart from "./components/Chart";
+import SalesData from "./components/SalesData";
+import { Container } from "reactstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <div>
-        <span>Table/Chart area</span>
-        <div>
-          <Table />
-          <Chart />
-        </div>
-      </div>
+    <div>
+      <Container>
+        <Header />
+        <SalesData />
+      </Container>
     </div>
   );
 }
