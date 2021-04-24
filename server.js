@@ -12,11 +12,14 @@ app.get("/agents", (req, res) => {
   let results = [];
 
   fs.createReadStream(__dirname + "/Sale-Data.csv")
-    .pipe(csv())
-    .on("data", (data) => results.push(data))
+    .pipe(csv(["agent", "propertyType", "date"]))
+    .on("data", (data) => {
+      console.log(data);
+
+      results.push(data);
+    })
     .on("end", () => {
-      console.log(results);
-      res.json(results);
+      res.json(results.slice(1));
     });
 });
 

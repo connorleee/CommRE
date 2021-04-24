@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Table from "./Table";
+import DataTable from "./DataTable";
 import Chart from "./Chart";
 import { Container, Col, Row, Button } from "reactstrap";
 
@@ -13,7 +13,7 @@ const SalesData = () => {
       </Row>
       <Row>
         <Col xl="6" lg="6" sm="12">
-          <Table setAgent={setCurrentAgent} />
+          <DataTable setAgent={setCurrentAgent} />
         </Col>
         <Col xl="6" lg="6" sm="12">
           <Chart />
