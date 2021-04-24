@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Table = () => {
+const Table = (props) => {
   return (
     <div>
       <h2>Table</h2>

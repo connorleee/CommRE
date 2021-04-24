@@ -8,12 +8,12 @@ const SalesData = () => {
 
   return (
     <Container>
-      <Row color="primary">
-        <h1 className="text-muted">Sales by agent: {currentAgent}</h1>
+      <Row className="bg-dark pl-2 pr-2">
+        <h3 className="text-white">Sales by agent: {currentAgent}</h3>
       </Row>
       <Row>
         <Col xl="6" lg="6" sm="12">
-          <Table />
+          <Table setAgent={setCurrentAgent} />
         </Col>
         <Col xl="6" lg="6" sm="12">
           <Chart />
