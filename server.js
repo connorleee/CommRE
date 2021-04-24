@@ -1,11 +1,23 @@
 const express = require("express");
+const cors = require("cors");
+const fs = require("fs");
+const csv = require("csv-parser"); //npm package to parse csv files
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors()); //allows all CORS requests since server is different port than client
 
 app.get("/agents", (req, res) => {
-  res.send("Agents");
+  let results = [];
+
+  fs.createReadStream(__dirname + "/Sale-Data.csv")
+    .pipe(csv())
+    .on("data", (data) => results.push(data))
+    .on("end", () => {
+      console.log(results);
+      res.json(results);
+    });
 });
 
 app.get("/property-types", (req, res) => {
