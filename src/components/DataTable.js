@@ -12,7 +12,11 @@ const DataTable = (props) => {
         <thead>
           <tr>
             {Object.keys(props.tableData[0]).map((title, key) => {
-              return <th key={key}>{title}</th>;
+              return (
+                <th key={key}>
+                  {title.charAt(0).toUpperCase() + title.slice(1)}
+                </th>
+              );
             })}
           </tr>
         </thead>
@@ -23,7 +27,6 @@ const DataTable = (props) => {
                 key={key}
                 id={row.agent}
                 onClick={(e) => {
-                  console.log(e.currentTarget.id);
                   props.setAgent(e.currentTarget.id);
                 }}
               >

@@ -8,46 +8,67 @@ const SalesData = () => {
   const [tableData, setTableData] = useState(null);
   const [chartData, setChartData] = useState(null);
 
+  // fetch tableData on page load
   useEffect(() => {
     async function fetchData() {
       const data = await fetch("http://localhost:3001/agents").then((res) =>
         res.json()
       );
 
-      console.log(data);
-
-      //table data
-      //create map -> key = name, value = int (number of occurances)
       let map = {};
 
-      //loop through data and populate map (this would usually be done with a database query)
+      //loop through data and populate map (this would usually be done with a database query since databases can optimize better)
       for (let i = 0; i < data.length; i++) {
         if (map[data[i].agent]) {
-          map[data[i].agent]++;
+          map[data[i].agent].push(data[i].propertyType);
         } else {
-          map[data[i].agent] = 1;
+          map[data[i].agent] = [data[i].propertyType];
         }
       }
-
-      console.log(map);
 
       let condensedData = [];
 
       for (const [agent, sales] of Object.entries(map)) {
         condensedData.push({
           agent: agent.charAt(0).toUpperCase() + agent.slice(1),
-          sales,
+          sales: sales.length,
         });
       }
-
-      console.log(condensedData);
-      //setTableData by looping through object and making an array of
 
       setTableData(condensedData);
     }
 
     fetchData();
   }, []);
+
+  //fetch chart Data on currentAgent update
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetch(
+        "http://localhost:3001/property-sales"
+      ).then((res) => res.json());
+
+      console.log(data);
+
+      //map of objects -> {agent: [properties]}
+      let map = {};
+
+      //loop through data and populate map (this would usually be done with a database query since databases can optimize better)
+      for (let i = 0; i < data.length; i++) {
+        if (map[data[i].agent]) {
+          map[data[i].agent].push(data[i].propertyType);
+        } else {
+          map[data[i].agent] = [data[i].propertyType];
+        }
+      }
+
+      console.log(map);
+
+      let agentProperties = [];
+    }
+
+    fetchData();
+  }, [currentAgent]);
 
   return (
     <Container>

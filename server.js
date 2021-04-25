@@ -28,7 +28,18 @@ app.get("/property-types", (req, res) => {
 });
 
 app.get("/property-sales", (req, res) => {
-  res.send("property-sales");
+  let results = [];
+
+  fs.createReadStream(__dirname + "/Sale-Data.csv")
+    .pipe(csv(["agent", "propertyType", "date"]))
+    .on("data", (data) => {
+      console.log(data);
+
+      results.push(data);
+    })
+    .on("end", () => {
+      res.json(results.slice(1));
+    });
 });
 
 app.listen(PORT, () => {
