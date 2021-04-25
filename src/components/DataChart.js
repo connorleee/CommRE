@@ -18,7 +18,7 @@ const DataChart = (props) => {
           ["Sleep", 7],
         ]}
         options={{
-          title: "My Daily Activities",
+          title: `Property-types sold by agent: ${props.agent}`,
         }}
         rootProps={{ "data-testid": "1" }}
       />

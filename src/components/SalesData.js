@@ -34,7 +34,10 @@ const SalesData = () => {
       let condensedData = [];
 
       for (const [agent, sales] of Object.entries(map)) {
-        condensedData.push({ agent, sales });
+        condensedData.push({
+          agent: agent.charAt(0).toUpperCase() + agent.slice(1),
+          sales,
+        });
       }
 
       console.log(condensedData);
