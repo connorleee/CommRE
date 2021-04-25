@@ -36,6 +36,7 @@ const SalesData = () => {
       }
 
       setTableData(condensedData);
+      setCurrentAgent(tableData[0].agent);
     }
 
     fetchData();
@@ -47,8 +48,6 @@ const SalesData = () => {
       const data = await fetch(
         "http://localhost:3001/property-sales"
       ).then((res) => res.json());
-
-      console.log(data);
 
       //map of objects -> {agent: [properties]}
       let map = {};
@@ -62,9 +61,9 @@ const SalesData = () => {
         }
       }
 
-      console.log(map);
+      //   console.log(map[currentAgent.toLowerCase()]);
 
-      let agentProperties = [];
+      setChartData(map[currentAgent.toLowerCase()]);
     }
 
     fetchData();
