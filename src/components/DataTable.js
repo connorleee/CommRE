@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Table } from "reactstrap";
 
 const DataTable = (props) => {
-  const [tableData, setTableData] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await fetch("http://localhost:3001/agents").then((res) =>
-        res.json()
-      );
-
-      setTableData(data);
-    }
-
-    fetchData();
-  }, []);
-
-  if (tableData === null) {
+  if (props.tableData === null) {
     return <h2>Loading Table...</h2>;
   }
 
@@ -25,13 +11,13 @@ const DataTable = (props) => {
       <Table responsive>
         <thead>
           <tr>
-            {Object.keys(tableData[0]).map((title, key) => {
+            {Object.keys(props.tableData[0]).map((title, key) => {
               return <th key={key}>{title}</th>;
             })}
           </tr>
         </thead>
         <tbody>
-          {tableData.map((row, key) => {
+          {props.tableData.map((row, key) => {
             return (
               <tr
                 key={key}
@@ -42,8 +28,7 @@ const DataTable = (props) => {
                 }}
               >
                 <td>{row.agent}</td>
-                <td>{row.propertyType}</td>
-                <td>{row.date}</td>
+                <td>{row.sales}</td>
               </tr>
             );
           })}
