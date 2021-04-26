@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "./DataTable";
 import DataChart from "./DataChart";
-import { Container, Col, Row, Button } from "reactstrap";
+import { Container, Col, Row } from "reactstrap";
 
 const SalesData = () => {
   const [currentAgent, setCurrentAgent] = useState("");
@@ -15,9 +15,10 @@ const SalesData = () => {
         res.json()
       );
 
+      //map of objects -> {agent: [properties]}
       let map = {};
 
-      //loop through data and populate map (this would usually be done with a database query since databases can optimize better)
+      //loop through data and populate map to condense data into relavent data structure (this would usually be done with a database query since databases can optimize better)
       for (let i = 0; i < data.length; i++) {
         if (map[data[i].agent]) {
           map[data[i].agent].push(data[i].propertyType);
@@ -35,14 +36,18 @@ const SalesData = () => {
         });
       }
 
-      setTableData(condensedData);
-      setCurrentAgent(tableData[0].agent);
+      await setTableData(condensedData);
     }
 
     fetchData();
   }, []);
 
-  //fetch chart Data on currentAgent update
+  //update current agent after table data is retrieved
+  useEffect(() => {
+    if (tableData) setCurrentAgent(tableData[0].agent);
+  }, [tableData]);
+
+  //fetch property sales to load into chart Data on currentAgent update
   useEffect(() => {
     async function fetchData() {
       const data = await fetch(
@@ -52,7 +57,7 @@ const SalesData = () => {
       //map of objects -> {agent: [properties]}
       let map = {};
 
-      //loop through data and populate map (this would usually be done with a database query since databases can optimize better)
+      //loop through data and populate map to condense data into relavent data structure (this would usually be done with a database query since databases can optimize better)
       for (let i = 0; i < data.length; i++) {
         if (map[data[i].agent]) {
           map[data[i].agent].push(data[i].propertyType);
@@ -61,16 +66,34 @@ const SalesData = () => {
         }
       }
 
-      //   console.log(map[currentAgent.toLowerCase()]);
-
       setChartData(map[currentAgent.toLowerCase()]);
     }
 
     fetchData();
   }, [currentAgent]);
 
+  //this useEffect is only to demonstrate fetching data from the /property-types endpoint. this data is not utilized in the application
+  useEffect(() => {
+    async function fetchPropertyTypes() {
+      const data = await fetch(
+        "http://localhost:3001/property-types"
+      ).then((res) => res.json());
+
+      let propertyTypes = new Set();
+
+      for (let i = 0; i < data.length; i++) {
+        let propertyType = data[i].propertyType;
+        propertyTypes.add(propertyType);
+      }
+
+      //   console.log(`Propert Types:`, propertyTypes);
+    }
+
+    fetchPropertyTypes();
+  }, []);
+
   return (
-    <Container>
+    <Container fluid="md">
       <Row className="bg-dark pl-2 pr-2">
         <h3 className="text-white">Sales by agent: {currentAgent}</h3>
       </Row>

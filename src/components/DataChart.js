@@ -2,27 +2,24 @@ import React from "react";
 import { Chart } from "react-google-charts";
 
 const DataChart = (props) => {
-  console.log(props.chartData);
-
   let chartDataObject = {};
-
-  for (let i = 0; i < props.chartData.length; i++) {
-    let property = props.chartData[i];
-
-    if (chartDataObject[property]) {
-      chartDataObject[property]++;
-    } else {
-      chartDataObject[property] = 1;
-    }
-  }
-
   let chartDataFormatted = [];
 
-  for (const [key, value] of Object.entries(chartDataObject)) {
-    chartDataFormatted.push([key, value]);
-  }
+  if (props.chartData) {
+    for (let i = 0; i < props.chartData.length; i++) {
+      let property = props.chartData[i];
 
-  console.log(chartDataFormatted);
+      if (chartDataObject[property]) {
+        chartDataObject[property]++;
+      } else {
+        chartDataObject[property] = 1;
+      }
+    }
+
+    for (const [key, value] of Object.entries(chartDataObject)) {
+      chartDataFormatted.push([key, value]);
+    }
+  }
 
   return (
     <div>
