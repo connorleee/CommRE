@@ -7,11 +7,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <div>
-      <Container>
-        <Row className="mb-2">
+      <Container fluid="md">
+        <Row className="mb-2 ml-2 mr-2">
           <Header />
         </Row>
-        <Row>
+        <Row className="mx-2">
           <SalesData />
         </Row>
       </Container>

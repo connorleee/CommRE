@@ -22,7 +22,16 @@ app.get("/agents", (req, res) => {
 });
 
 app.get("/property-types", (req, res) => {
-  res.send("property-types");
+  let results = [];
+
+  fs.createReadStream(__dirname + "/Sale-Data.csv")
+    .pipe(csv(["agent", "propertyType", "date"]))
+    .on("data", (data) => {
+      results.push(data);
+    })
+    .on("end", () => {
+      res.json(results.slice(1));
+    });
 });
 
 app.get("/property-sales", (req, res) => {
