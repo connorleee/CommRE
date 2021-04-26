@@ -35,12 +35,16 @@ const SalesData = () => {
         });
       }
 
-      setTableData(condensedData);
-      setCurrentAgent(tableData[0].agent);
+      await setTableData(condensedData);
     }
 
     fetchData();
   }, []);
+
+  //update current agent after table data is retrieved
+  useEffect(() => {
+    if (tableData) setCurrentAgent(tableData[0].agent);
+  }, [tableData]);
 
   //fetch chart Data on currentAgent update
   useEffect(() => {

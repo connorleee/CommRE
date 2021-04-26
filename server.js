@@ -14,8 +14,6 @@ app.get("/agents", (req, res) => {
   fs.createReadStream(__dirname + "/Sale-Data.csv")
     .pipe(csv(["agent", "propertyType", "date"]))
     .on("data", (data) => {
-      console.log(data);
-
       results.push(data);
     })
     .on("end", () => {
@@ -33,8 +31,6 @@ app.get("/property-sales", (req, res) => {
   fs.createReadStream(__dirname + "/Sale-Data.csv")
     .pipe(csv(["agent", "propertyType", "date"]))
     .on("data", (data) => {
-      console.log(data);
-
       results.push(data);
     })
     .on("end", () => {
